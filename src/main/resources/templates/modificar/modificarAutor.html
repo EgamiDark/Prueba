@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Modificar Autor</title>
+</head>
+<body>
+	<div style="color: white; display: flex; justify-content: center;">
+		<form th:action="@{/modAutor}" th:object="${autor}" method="post"
+			style="padding: 50px;">
+			<h1>Modificar Autor</h1>
+			<div>
+				<label for="id">Identificador</label>
+			</div>
+			<div>
+				<input name="id" id="id" type="text" th:field="*{id}"
+					th:value="${autor.id}" readonly="readonly">
+			</div>
+			<div>
+				<label for="nombre">Nombre</label>
+			</div>
+			<div>
+				<input name="nombre" id="nombre" type="text" th:field="*{nombre}"
+					th:value="${autor.nombre}">
+			</div>
+			<div th:if="${#fields.hasErrors('nombre')}" th:errors=*{nombre} class="text-danger" style="color:red"></div>
+			<div>
+				<label for="apellido">Apellido</label>
+			</div>
+			<div>
+				<input name="apellido" id="apellido" type="text"
+					th:field="*{apellido}" th:value="${autor.apellido}">
+			</div>
+			<div th:if="${#fields.hasErrors('apellido')}" th:errors=*{apellido} class="text-danger" style="color:red"></div>
+			<div>
+				<label for="nacionalidad">Nacionalidad</label>
+			</div>
+			<div>
+				<input name="nacionalidad" id="nacionalidad" type="text" th:field="*{nacionalidad}" th:value="${autor.nacionalidad}">
+			</div>
+			<div th:if="${#fields.hasErrors('nacionalidad')}" th:errors=*{nacionalidad} class="text-danger" style="color:red"></div>
+			<div>
+				<label for="fechaNacimiento">Fecha Nacimiento</label>
+			</div>
+			<div>
+				<input name="fechaNacimiento" id="fechaNacimiento" type="date" th:field="*{fechaNacimiento}" th:value="${autor.fechaNacimiento}">
+			</div>
+			<div th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors=*{fechaNacimiento} class="text-danger" style="color:red"></div>
+			<div>
+				<label for="seudonimo">Seudonimo</label>
+			</div>
+			<div>
+				<input name="seudonimo" id="seudonimo" type="text"
+					th:field="*{seudonimo}" th:value="${autor.seudonimo}">
+			</div>
+			<div th:if="${#fields.hasErrors('seudonimo')}" th:errors=*{seudonimo} class="text-danger" style="color:red"></div>
+			<div>
+				<input type="submit" value="Modificar Autor">
+			</div>
+		</form>
+	</div>
+</body>
+</html>

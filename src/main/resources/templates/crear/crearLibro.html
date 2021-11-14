@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Crear Libro</title>
+</head>
+<body>
+	<div style="color:white; display:flex;justify-content:center;">
+	
+	<form th:action="@{/formLibro}" th:object="${libro}" method="post" style="padding:50px;">
+	<h1>Crear Libro</h1>
+		<div>
+			<label for="id">Identificador</label>
+		</div>
+		<div>
+			<input name="id" id="id" type="number" th:field="*{id}">
+		</div>
+		<div th:if="${#fields.hasErrors('id')}" th:errors=*{id} class="text-danger" style="color:red"></div>
+		<div>
+			<label for="titulo">Título</label>
+		</div>
+		<div>
+			<input name="titulo" id="titulo" type="text" th:field="*{titulo}">
+		</div>
+		<div th:if="${#fields.hasErrors('titulo')}" th:errors=*{titulo} class="text-danger" style="color:red"></div>
+		<div>
+			<label for="autor">Autor</label>
+		</div>
+		<div>
+			<select id="autor" type="text" th:field="*{autor}">
+				<option value="">Seleccione al autor</option>
+				<option th:each="autor: ${autores}" th:text="${autor.nombre}+' '+${autor.apellido}" th:value="${autor.id}" ></option>
+			</select>
+		</div>
+		<div th:if="${#fields.hasErrors('autor')}" th:errors=*{autor} class="text-danger" style="color:red"></div>
+		<div>
+			<label for="categoria">Categoria</label>
+		</div>
+		<div>
+			<select id="categoria" type="text" th:field="*{categoria}">
+				<option value="">Seleccione la categoria</option>
+				<option th:each="categoria: ${categorias}"
+					th:text="${categoria.descripcion}" th:value="${categoria.id}"></option>
+			</select>
+		</div>
+		<div th:if="${#fields.hasErrors('categoria')}" th:errors=*{categoria} class="text-danger" style="color:red"></div>
+		<div>
+			<label for="descripcion">Descripción</label>
+		</div>
+		<div>
+			<input name="descripcion" id="descripcion" type="text"
+				th:field="*{descripcion}">
+		</div>
+		<div th:if="${#fields.hasErrors('descripcion')}" th:errors=*{descripcion} class="text-danger" style="color:red"></div>
+		<div>
+			<label for="anio">Año</label>
+		</div>
+		<div>
+			<input name="anio" id="anio" type="number" th:field="*{anio}">
+		</div>
+		<div th:if="${#fields.hasErrors('anio')}" th:errors=*{anio} class="text-danger" style="color:red"></div>
+		<div>
+			<label for="isbn">ISBN</label>
+		</div>
+		<div>
+			<input name="isbn" id="isbn" type="text" th:field="*{isbn}">
+		</div>
+		<div th:if="${#fields.hasErrors('isbn')}" th:errors=*{isbn} class="text-danger" style="color:red"></div>
+		<div>
+			<label for="cantPaginas">Cantidad de paginas</label>
+		</div>
+		<div>
+			<input name="cantPaginas" id="cantPaginas" type="number"
+				th:field="*{cantPaginas}">
+		</div>
+		<div th:if="${#fields.hasErrors('cantPaginas')}" th:errors=*{cantPaginas} class="text-danger" style="color:red"></div>
+		<div >
+			<input type="submit" value="Crear Libro">
+		</div>
+	</form>
+	</div>
+</body>
+</html>

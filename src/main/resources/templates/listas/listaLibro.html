@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lista Libro</title>
+</head>
+<body>
+	<div style="text-align:center;padding:50px;display:flex;justify-content:center;">
+	<table style="background-color: white; border:black 1px solid;border-collapse: collapse;">
+		<thead>
+			<tr>
+				<th style="border:black 1px solid; padding:10px 20px">ID</th>
+				<th style="border:black 1px solid; padding:10px 20px">TÍtulo</th>
+				<th style="border:black 1px solid; padding:10px 20px">Autor</th>
+				<th style="border:black 1px solid; padding:10px 20px">Año</th>
+				<th style="border:black 1px solid; padding:10px 20px">ISBN</th>
+				<th style="border:black 1px solid; padding:10px 20px">Páginas</th>
+				<th style="border:black 1px solid; padding:10px 20px">Categoria</th>
+				<th style="border:black 1px solid; padding:10px 20px">Acción</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${libros != null}" th:each="libro: ${libros}">
+				<td th:text="${libro.id}"></td>
+				<td th:text="${libro.titulo}"></td>
+				<td th:text="${libro.autor.nombre}"></td>
+				<td th:text="${libro.anio}"></td>
+				<td th:text="${libro.isbn}"></td>
+				<td th:text="${libro.cantPaginas}"></td>
+				<td th:text="${libro.categoria.descripcion}"></td>
+				<td><a th:href="@{/eliminarLib/}+${libro.id}">Eliminar</a> <a
+					th:href="@{/modificarLib/}+${libro.id}">Modificar</a></td>
+
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</body>
+</html>

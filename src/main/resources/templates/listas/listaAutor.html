@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Lista Autor</title>
+</head>
+<body>
+	<div style="text-align:center;padding:50px;display:flex;justify-content:center;">
+	<table style="background-color: white; border:black 1px solid;border-collapse: collapse;">
+		<thead>
+			<tr>
+				<th style="border:black 1px solid; padding:10px 20px">ID</th>
+				<th style="border:black 1px solid; padding:10px 20px">Nombre</th>
+				<th style="border:black 1px solid; padding:10px 20px">Apellido</th>
+				<th style="border:black 1px solid; padding:10px 20px">Nacionalidad</th>
+				<th style="border:black 1px solid; padding:10px 20px">Fecha Nacimiento</th>
+				<th style="border:black 1px solid; padding:10px 20px">Seudonimo</th>
+				<th style="border:black 1px solid; padding:10px 20px">Acción</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${autores != null}" th:each="autor: ${autores}">
+				<td th:text="${autor.id}"></td>
+				<td th:text="${autor.nombre}"></td>
+				<td th:text="${autor.apellido}"></td>
+				<td th:text="${autor.nacionalidad}"></td>
+				<td th:text="${autor.fechaNacimiento}"></td>
+				<td th:text="${autor.seudonimo}"></td>
+				<td><a th:href="@{/eliminarAut/}+${autor.id}">Eliminar</a> <a
+					th:href="@{/modificarAut/}+${autor.id}">Modificar</a></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</body>
+</html>

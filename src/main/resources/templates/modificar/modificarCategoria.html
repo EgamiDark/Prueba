@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Modificar Categoria</title>
+</head>
+<body>
+	<div style="color: white; display: flex; justify-content: center;">
+		<form th:action="@{/modCategoria}" th:object="${categoria}" method="post"
+			style="padding: 50px;">
+			<h1>Modificar Categoria</h1>
+			<div>
+				<label for="id">Identificador</label>
+			</div>
+			<div>
+				<input name="id" id="id" type="number" th:field="*{id}"
+					th:value="${categoria.id}" readonly="readonly">
+			</div>
+			<div>
+				<label for="descripcion">Descripción</label>
+			</div>
+			<div>
+				<input name="descripcion" id="descripcion" type="text" th:field="*{descripcion}"
+					th:value="${categoria.descripcion}">
+			</div>
+			<div th:if="${#fields.hasErrors('descripcion')}" th:errors=*{descripcion} class="text-danger" style="color:red"></div>
+			<div>
+				<input type="submit" value="Modificar Categoria">
+			</div>
+		</form>
+	</div>
+</body>
+</html>
