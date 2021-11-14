@@ -33,6 +33,11 @@ public class CategoriaController {
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(Categoria.class,"categoria",categoriaEditor);
 	}
+
+	@GetMapping("/indexCategoria")
+	public String indexCategoria() {
+		return "contenido/contCategoria";
+	}
 	
 	@GetMapping("/crearCategoria")
 	public String crearCategoria(Model model) {

@@ -35,6 +35,11 @@ public class AutorController {
 		binder.registerCustomEditor(Autor.class,"autor",autorEditor);
 	}
 	
+	@GetMapping("/indexAutor")
+	public String indexAutor() {
+		return "contenido/contAutor";
+	}
+
 	@GetMapping("/crearAutor")
 	public String crearAutor(Model model) {
 		Autor autor = new Autor();

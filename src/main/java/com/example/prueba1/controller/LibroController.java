@@ -48,6 +48,11 @@ public class LibroController {
 		binder.registerCustomEditor(Autor.class,"autor",autorEditor);
 		binder.registerCustomEditor(Categoria.class,"categoria",categoriaEditor);
 	}
+
+	@GetMapping("/indexLibro")
+	public String indexLibro() {
+		return "contenido/contLibro";
+	}
 	
 	@GetMapping("/crearLibro")
 	public String crearLibro(Model model) {
