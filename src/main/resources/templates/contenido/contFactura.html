@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+  <head th:replace="index :: head"></head>
+  <body class="p-5">
+    <div class="ms-5 me-5">
+      <div class="row">
+        <div class="col-9">
+          <h1>Listado de Facturas</h1>
+        </div>
+        <div class="col-3 text-end">
+          <button class="btn btn-primary">Crear Nuevo</button>
+        </div>
+      </div>
+      <div class="mt-3">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th width="5%">Folio</th>
+              <th width="30%">Descripción</th>
+              <th width="10%">Fecha</th>
+              <th width="20%">Total</th>
+              <th width="10%">Acción</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

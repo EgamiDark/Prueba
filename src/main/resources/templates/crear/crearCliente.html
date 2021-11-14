@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="index :: head"></head>
+	<body class="p-5">
+		<div class="ms-5 me-5">
+			<div class="card ms-5 me-5">
+				<div class="card-body">
+					<h1 class="mb-4">Crear Cliente</h1>
+					<form th:action="@{/formCliente}" th:object="${cliente}" method="post">
+
+						<div class="form-floating mb-3">
+							<input name="nombre" id="nombre" type="text" th:field="*{nombre}" class="form-control" />
+							<label for="nombre">Nombre</label>
+						</div>
+						<div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger"
+							style="color: red"></div>
+
+						<div class="form-floating mb-3">
+							<input name="apellido" id="apellido" type="text" th:field="*{apellido}"
+								class="form-control" />
+							<label for="apellido">Apellido</label>
+						</div>
+						<div th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="text-danger"
+							style="color: red"></div>
+
+						<div class="form-floating mb-3">
+							<input name="email" id="email" type="email" th:field="*{email}" class="form-control" />
+							<label for="email">Email</label>
+						</div>
+						<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"
+							style="color: red"></div>
+
+						<div class="form-floating mb-3">
+							<input name="direccion" id="direccion" type="text" th:field="*{direccion}"
+								class="form-control" />
+							<label for="direccion">Dirección</label>
+						</div>
+						<div th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}" class="text-danger"
+							style="color: red"></div>
+						<input type="submit" value="Crear Libro" class="btn btn-primary" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
