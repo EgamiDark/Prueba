@@ -1,15 +1,22 @@
 package com.example.prueba1.models.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Entity
+@Table(name = "autores")
 public class Autor {
-
-	@NotEmpty
+	@Id
 	private String id;
 	@NotEmpty
 	@Size(min=4,max=255)
@@ -25,9 +32,14 @@ public class Autor {
 	@NotBlank
 	@Size(min=3,max=255)
 	private String seudonimo;
+
+	@OneToMany(mappedBy = "autor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Libro>libros;
+
 	public Autor() {
+		this.libros = new ArrayList<Libro>();
 	}
+	
 	public Autor(String id, String nombre, String apellido, String nacionalidad, String fechaNacimiento,
 			String seudonimo, List<Libro> libros) {
 		this.id = id;

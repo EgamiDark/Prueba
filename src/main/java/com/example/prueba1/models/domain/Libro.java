@@ -1,5 +1,12 @@
 package com.example.prueba1.models.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -8,25 +15,36 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
 
+@Entity
+@Table(name = "libros")
 public class Libro {
-
-	@NotNull
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
 	@NotBlank
 	@NotEmpty
 	@Size(min=5,max=255)
 	private String titulo;
+
 	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Autor autor;
+
 	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Categoria categoria;
+
 	@NotEmpty
 	private String descripcion;
+
 	@NotNull
 	private Integer anio;
+
 	@NotEmpty
 	@Pattern(regexp = "[0-9]{4}[-][0-9]{2}[-][0-9]{5}[-][0-9]{2}[-][0-9]{1}")
 	private String isbn;
+
 	@NotNull
 	@Range(min=1)
 	private Integer cantPaginas;
