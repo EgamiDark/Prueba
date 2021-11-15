@@ -5,6 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -19,20 +20,22 @@ import org.hibernate.validator.constraints.Range;
 @Table(name = "libros")
 public class Libro {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@NotBlank
 	@NotEmpty
-	@Size(min=5,max=255)
+	@Size(min = 5, max = 255)
 	private String titulo;
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="autor_id")
 	private Autor autor;
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="categoria_id")
 	private Categoria categoria;
 
 	@NotEmpty
@@ -42,16 +45,17 @@ public class Libro {
 	private Integer anio;
 
 	@NotEmpty
-	@Pattern(regexp = "[0-9]{4}[-][0-9]{2}[-][0-9]{5}[-][0-9]{2}[-][0-9]{1}")
+	@Pattern(regexp = "[0-9]{3}[-][0-9]{2}[-][0-9]{5}[-][0-9]{2}[-][0-9]{1}")
 	private String isbn;
 
 	@NotNull
-	@Range(min=1)
+	@Range(min = 1)
 	private Integer cantPaginas;
-	
+
 	public Libro() {
 
 	}
+
 	public Libro(Integer id, String titulo, Autor autor, Categoria categoria, String descripcion, Integer anio,
 			String isbn, Integer cantPaginas) {
 		this.id = id;
@@ -63,54 +67,69 @@ public class Libro {
 		this.isbn = isbn;
 		this.cantPaginas = cantPaginas;
 	}
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getTitulo() {
 		return titulo;
 	}
+
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
+
 	public Autor getAutor() {
 		return autor;
 	}
+
 	public void setAutor(Autor autor) {
 		this.autor = autor;
 	}
+
 	public Categoria getCategoria() {
 		return categoria;
 	}
+
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
 	public Integer getAnio() {
 		return anio;
 	}
+
 	public void setAnio(Integer anio) {
 		this.anio = anio;
 	}
+
 	public String getIsbn() {
 		return isbn;
 	}
+
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
+
 	public Integer getCantPaginas() {
 		return cantPaginas;
 	}
+
 	public void setCantPaginas(Integer cantPaginas) {
 		this.cantPaginas = cantPaginas;
 	}
-
 
 }

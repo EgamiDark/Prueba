@@ -20,7 +20,7 @@ public class Categoria {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@NotEmpty
 	@Size(min = 3, max = 255)
@@ -29,7 +29,7 @@ public class Categoria {
 	@OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Libro> libros;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -37,13 +37,13 @@ public class Categoria {
 		this.libros = new ArrayList<Libro>();
 	}
 
-	public Categoria(Integer id, String descripcion, List<Libro> libros) {
+	public Categoria(Long id, String descripcion, List<Libro> libros) {
 		this.id = id;
 		this.descripcion = descripcion;
 		this.libros = libros;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

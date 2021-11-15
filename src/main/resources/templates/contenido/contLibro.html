@@ -17,15 +17,57 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th width="30%">Titulo</th>
-              <th width="30%">Año</th>
-              <th width="30%">Cant. Paginas</th>
+              <th width="20%">Titulo</th>
+              <th width="30%">Descripcion</th>
+              <th width="20%">Año</th>
+              <th width="20%">Cant. Paginas</th>
               <th width="10%">Acción</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            <tr th:each="libro : ${libros}">
+              <td th:text="${libro.titulo}"></td>
+              <td th:text="${libro.descripcion}"></td>
+              <td th:text="${libro.anio}"></td>
+              <td th:text="${libro.cantPaginas}"></td>
+              <td>
+                <a
+                  class="btn btn-primary"
+                  th:href="@{'/modificarLib/' + ${libro.id}}"
+                >
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a class="btn btn-danger" th:onclick="|eliminar(${libro.id})|">
+                  <i class="fas fa-trash-alt"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
         </table>
+        <nav th:replace="paginador :: paginador"></nav>
       </div>
     </div>
+    <script th:replace="index :: sweetalert2"></script>
+    <script th:replace="index :: jquery"></script>
+    <script>
+      function eliminar(id) {
+        Swal.fire({
+          title: "¿Seguro que deseas eliminar este libro?",
+          showDenyButton: true,
+          confirmButtonText: "Si",
+          confirmButtonColor: '#0d6efd',
+          denyButtonText: `Cancelar`,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            Swal.fire("Exito!", "Libro eliminado correctamente", "success").then(() => {
+              location.href = "/eliminarLibro/" + id;
+            });
+          } else if (result.isDenied) {
+            Swal.fire("Los cambios no pudieron ser guardados", "", "info");
+          }
+        });
+      }
+    </script>
   </body>
 </html>

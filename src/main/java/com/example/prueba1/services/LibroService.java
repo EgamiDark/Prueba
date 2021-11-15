@@ -4,10 +4,13 @@ import java.util.List;
 
 import com.example.prueba1.models.domain.Libro;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface LibroService {
-	public List<Libro> obtenerLibros();
-	public Libro obtenerLibro(Integer id);
-	public void eliminarLibro(Integer id);
-	public void crearLibro(Libro libro);
-	public void modificarLibro(Libro libro);
+	public Page<Libro> findAll(Pageable pageable);
+	public List<Libro> findAll();
+	public void save(Libro libro);
+	public Libro findOne(Long id);
+	public void delete(Libro libro);
 }

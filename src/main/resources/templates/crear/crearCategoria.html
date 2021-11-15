@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Crear Categoria</title>
-</head>
-<body>
-	<div style="color:white; display:flex;justify-content:center;">
-	
-	<form th:action="@{/formCategoria}" th:object="${categoria}" method="post" style="padding:50px;">
-	<h1>Crear Categoria</h1>
-		<div>
-			<label for="id">Identificador</label>
-		</div>
-		<div>
-			<input name="id" id="id" type="number" th:field="*{id}">
-		</div>
-		<div th:if="${#fields.hasErrors('id')}" th:errors=*{id} class="text-danger" style="color:red"></div>
-		<div>
-			<label for="descripcion">Descripcion</label>
-		</div>
-		<div>
-			<input name="descripcion" id="descripcion" type="text" th:field="*{descripcion}">
-		</div>
-		<div th:if="${#fields.hasErrors('descripcion')}" th:errors=*{descripcion} class="text-danger" style="color:red"></div>
-		<div >
-			<input type="submit" value="Crear Categoria">
-		</div>
-	</form>
-	</div>
-</body>
+  <head th:replace="index :: head"></head>
+  <body class="p-5">
+    <div class="ms-5 me-5">
+      <div class="card ms-5 me-5">
+        <div class="card-body">
+          <h1 class="mb-4">Crear Categoria</h1>
+          <form
+            th:action="@{/formCategoria}"
+            th:object="${categoria}"
+            method="post"
+          >
+            <div class="row">
+              <div class="col-9">
+                <div class="form-floating mb-3">
+                  <input
+                    name="descripcion"
+                    id="descripcion"
+                    type="text"
+                    th:field="*{descripcion}"
+                    class="form-control"
+                  />
+                  <label for="descripcion">Descripcion</label>
+                </div>
+                <div
+                  th:if="${#fields.hasErrors('descripcion')}"
+                  th:errors="*{descripcion}"
+                  class="text-danger"
+                  style="color: red"
+                ></div>
+              </div>
+              <div class="col-3">
+                <input
+                  type="submit"
+                  value="Crear Categoria"
+                  class="btn btn-primary btn-lg"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

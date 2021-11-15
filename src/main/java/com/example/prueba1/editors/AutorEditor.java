@@ -17,7 +17,7 @@ public class AutorEditor extends PropertyEditorSupport {
 		if(text != null && text.length()>0) {
 			try {
 				String id =text;
-				this.setValue(autorService.obtenerAutor(id));
+				this.setValue(autorService.findOne(id));
 			}
 			catch(NumberFormatException e){
 				setValue(null);

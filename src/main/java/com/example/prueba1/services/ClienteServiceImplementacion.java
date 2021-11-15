@@ -47,11 +47,4 @@ public class ClienteServiceImplementacion implements ClienteService{
 		clienteDao.deleteById(id);
 		
 	}
-
-	
-	
-	
-}	
-	
-	
-	
+}

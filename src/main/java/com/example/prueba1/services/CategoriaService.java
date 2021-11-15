@@ -2,13 +2,15 @@ package com.example.prueba1.services;
 
 import java.util.List;
 
-import com.example.prueba1.models.domain.Autor;
 import com.example.prueba1.models.domain.Categoria;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface CategoriaService {
-	public List<Categoria> obtenerCategorias();
-	public Categoria obtenerCategoria(Integer id);
-	public void eliminarCategoria(Integer id);
-	public void crearCategoria(Categoria categoria);
-	public void modificarCategoria(Categoria categoria);
+	public Page<Categoria> findAll(Pageable pageable);
+	public List<Categoria> findAll();
+	public void save(Categoria categoria);
+	public Categoria findOne(Long id);
+	public void delete(Long id);
 }

@@ -1,93 +1,178 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Modificar Libro</title>
-</head>
-<body>
-	<div style="color: white; display: flex; justify-content: center;">
-		<form th:action="@{/modLibro}" th:object="${libro}" method="post"
-			style="padding: 50px;">
-			<h1>Modificar Libro</h1>
-			<div>
-				<label for="id">Identificador</label>
-			</div>
-			<div>
-				<input name="id" id="id" type="number" th:field="*{id}"
-					th:value="${libro.id}" readonly="readonly">
-			</div>
-			<div>
-				<label for="titulo">Título</label>
-			</div>
-			<div>
-				<input name="titulo" id="titulo" type="text" th:field="*{titulo}"
-					th:value="${libro.titulo}">
-			</div>
-			<div th:if="${#fields.hasErrors('titulo')}" th:errors=*{titulo} class="text-danger" style="color:red"></div>
-			<div>
-				<label for="autor">Autor</label>
-			</div>
-			<div>
-				<select id="autor" type="text" th:field="*{autor}">
-					<option value="">Seleccione al autor</option>
-					<option th:each="autor: ${autores}"
-						th:text="${autor.nombre}+' '+${autor.apellido}"
-						th:value="${autor.id}" th:if="${autor.id==libro.autor.id}"></option>
-					<option th:each="autor: ${autores}"
-						th:text="${autor.nombre}+' '+${autor.apellido}"
-						th:value="${autor.id}" th:if="${autor.id!=libro.autor.id}"></option>
-				</select>
-			</div>
-			<div th:if="${#fields.hasErrors('autor')}" th:errors=*{autor} class="text-danger" style="color:red"></div>
-			<div>
-				<label for="categoria">Categoria</label>
-			</div>
-			<div>
-				<select id="categoria" th:field="*{categoria}">
-					<option value="">Seleccione la categoria</option>
-					<option th:each="categoria: ${categorias}"
-						th:text="${categoria.descripcion}" th:value="${categoria.id}"
-						th:if="${categoria.id}==${libro.categoria.id}" selected="selected"></option>
-					<option th:each="categoria: ${categorias}"
-						th:text="${categoria.descripcion}" th:value="${categoria.id}"
-						th:if="${categoria.id}!=${libro.categoria.id}"></option>
-				</select>
-			</div>
-			<div th:if="${#fields.hasErrors('categoria')}" th:errors=*{categoria} class="text-danger" style="color:red"></div>
-			<div>
-				<label for="descripcion">Descripción</label>
-			</div>
-			<div>
-				<input name="descripcion" id="descripcion" type="text"
-					th:field="*{descripcion}">
-			</div>
-			<div th:if="${#fields.hasErrors('descripcion')}" th:errors=*{descripcion} class="text-danger" style="color:red"></div>
-			<div>
-				<label for="anio">Año</label>
-			</div>
-			<div>
-				<input name="anio" id="anio" type="number" th:field="*{anio}">
-			</div>
-			<div th:if="${#fields.hasErrors('anio')}" th:errors=*{anio} class="text-danger" style="color:red"></div>
-			<div>
-				<label for="isbn">ISBN</label>
-			</div>
-			<div>
-				<input name="isbn" id="isbn" type="text" th:field="*{isbn}">
-			</div>
-			<div th:if="${#fields.hasErrors('isbn')}" th:errors=*{isbn} class="text-danger" style="color:red"></div>
-			<div>
-				<label for="cantPaginas">Cantidad de paginas</label>
-			</div>
-			<div>
-				<input name="cantPaginas" id="cantPaginas" type="number"
-					th:field="*{cantPaginas}">
-			</div>
-			<div th:if="${#fields.hasErrors('cantPaginas')}" th:errors=*{cantPaginas} class="text-danger" style="color:red"></div>
-			<div>
-				<input type="submit" value="Modificar Libro">
-			</div>
-		</form>
-	</div>
-</body>
+  <head th:replace="index :: head"></head>
+  <body class="p-5">
+    <div class="ms-5 me-5">
+      <div class="card ms-5 me-5">
+        <div class="card-body">
+          <h1 class="mb-4">Modificar Libro</h1>
+          <form th:action="@{/modLibro}" th:object="${libro}" method="post">
+            <div class="form-floating mb-3">
+              <input
+                name="id"
+                id="id"
+                type="number"
+                th:field="*{id}"
+                th:value="${libro.id}"
+                readonly="readonly"
+                class="form-control"
+              />
+              <label for="id">Identificador</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                name="titulo"
+                id="titulo"
+                type="text"
+                th:field="*{titulo}"
+                th:value="${libro.titulo}"
+                class="form-control"
+              />
+              <label for="titulo">Título</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('titulo')}"
+              th:errors="*{titulo}"
+              class="text-danger"
+              style="color: red"
+            ></div>
+
+            <div class="form-floating mt-3 mb-3">
+              <select
+                id="autor"
+                type="text"
+                th:field="*{autor}"
+                class="form-select"
+              >
+                <option value="">Seleccione al autor</option>
+                <option
+                  th:each="autor: ${autores}"
+                  th:text="${autor.nombre}+' '+${autor.apellido}"
+                  th:value="${autor.id}"
+                  th:if="${autor.id==libro.autor.id}"
+                ></option>
+                <option
+                  th:each="autor: ${autores}"
+                  th:text="${autor.nombre}+' '+${autor.apellido}"
+                  th:value="${autor.id}"
+                  th:if="${autor.id!=libro.autor.id}"
+                ></option>
+              </select>
+              <label for="autor">Autor</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('autor')}"
+              th:errors="*{autor}"
+              class="text-danger"
+              style="color: red"
+            ></div>
+
+            <div class="form-floating mt-3 mb-3">
+              <select
+                id="categoria"
+                th:field="*{categoria}"
+                class="form-select"
+              >
+                <option value="">Seleccione la categoria</option>
+                <option
+                  th:each="categoria: ${categorias}"
+                  th:text="${categoria.descripcion}"
+                  th:value="${categoria.id}"
+                  th:if="${categoria.id}==${libro.categoria.id}"
+                  selected="selected"
+                ></option>
+                <option
+                  th:each="categoria: ${categorias}"
+                  th:text="${categoria.descripcion}"
+                  th:value="${categoria.id}"
+                  th:if="${categoria.id}!=${libro.categoria.id}"
+                ></option>
+              </select>
+              <label for="categoria">Categoria</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('categoria')}"
+              th:errors="*{categoria}"
+              class="text-danger"
+              style="color: red"
+            ></div>
+
+            <div class="form-floating mb-3">
+              <input
+                name="descripcion"
+                id="descripcion"
+                type="text"
+                th:field="*{descripcion}"
+                class="form-control"
+              />
+              <label for="descripcion">Descripción</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('descripcion')}"
+              th:errors="*{descripcion}"
+              class="text-danger"
+              style="color: red"
+            ></div>
+
+            <div class="form-floating mb-3">
+              <input
+                name="anio"
+                id="anio"
+                type="number"
+                th:field="*{anio}"
+                class="form-control"
+              />
+              <label for="anio">Año</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('anio')}"
+              th:errors="*{anio}"
+              class="text-danger"
+              style="color: red"
+            ></div>
+
+            <div class="form-floating mb-3">
+              <input
+                name="isbn"
+                id="isbn"
+                type="text"
+                th:field="*{isbn}"
+                class="form-control"
+              />
+              <label for="isbn">ISBN</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('isbn')}"
+              th:errors="*{isbn}"
+              class="text-danger"
+              style="color: red"
+            ></div>
+
+            <div class="form-floating mb-3">
+              <input
+                name="cantPaginas"
+                id="cantPaginas"
+                type="number"
+                th:field="*{cantPaginas}"
+                class="form-control"
+              />
+              <label for="cantPaginas">Cantidad de paginas</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('cantPaginas')}"
+              th:errors="*{cantPaginas}"
+              class="text-danger"
+              style="color: red"
+            ></div>
+            <input
+              type="submit"
+              value="Modificar Libro"
+              class="btn btn-primary"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

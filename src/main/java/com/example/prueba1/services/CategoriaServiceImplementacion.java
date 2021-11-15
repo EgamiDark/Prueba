@@ -1,71 +1,50 @@
 package com.example.prueba1.services;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.prueba1.dao.CategoriaDAO;
 import com.example.prueba1.models.domain.Categoria;
 
 @Service
 public class CategoriaServiceImplementacion implements CategoriaService{
-	
-	private List<Categoria> categorias;
-	
-	public CategoriaServiceImplementacion() {
-		
-		this.categorias = new ArrayList<Categoria>(Arrays.asList(
-				new Categoria(1, "Accion",null),
-				new Categoria(2, "Terror",null),
-				new Categoria(3, "Romantica",null),
-				new Categoria(4, "Comedia",null)
-				));
-	}
+	@Autowired
+	private CategoriaDAO categoriaDAO;
 
+	// Paginacion
+	@Transactional(readOnly = true)
 	@Override
-	public List<Categoria> obtenerCategorias() {
-		// TODO Auto-generated method stub
-		return this.categorias;
+	public Page<Categoria> findAll(Pageable pageable){
+		return categoriaDAO.findAll(pageable);
 	}
 
+	@Transactional
 	@Override
-	public Categoria obtenerCategoria(Integer id) {
-		Categoria result = null;
-		for(Categoria categoria: this.categorias) {
-			if(id==categoria.getId()) {
-				result = categoria;
-				break;
-			}
-		}
-		// TODO Auto-generated method stub
-		return result;
+	public List<Categoria> findAll() {
+		return (List<Categoria>) categoriaDAO.findAll();
 	}
 
+	@Transactional
 	@Override
-	public void eliminarCategoria(Integer id) {
-		// TODO Auto-generated method stub
-		for(Categoria categoria: this.categorias) {
-			if(id==categoria.getId()) {
-				this.categorias.remove(categoria);
-				break;
-			}
-		}
+	public void save(Categoria categoria) {
+		categoriaDAO.save(categoria);
 	}
 
+	@Transactional
 	@Override
-	public void crearCategoria(Categoria categoria) {
-		this.categorias.add(categoria);
+	public Categoria findOne(Long id) {
+		return categoriaDAO.findById(id).orElse(null);
 	}
 
+	@Transactional
 	@Override
-	public void modificarCategoria(Categoria categoria) {
-		for(Categoria cat: this.categorias) {
-			if(cat.getId()==categoria.getId()) {
-				cat.setDescripcion(categoria.getDescripcion());
-			}
-		}
-		
+	public void delete(Long id) {
+		Categoria categoriaDelete = categoriaDAO.findById(id).orElse(null);
+		categoriaDAO.delete(categoriaDelete);
 	}
-
 }

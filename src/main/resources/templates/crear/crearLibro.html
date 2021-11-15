@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<head th:replace="index :: head"></head>
+  <head th:replace="index :: head"></head>
   <body class="p-5">
     <div class="ms-5 me-5">
-      <div class="card ms-5 me-5" >
+      <div class="card ms-5 me-5">
         <div class="card-body">
           <h1 class="mb-4">Crear Libro</h1>
           <form th:action="@{/formLibro}" th:object="${libro}" method="post">
@@ -66,8 +66,7 @@
             <div
               th:if="${#fields.hasErrors('categoria')}"
               th:errors="*{categoria}"
-              class="text-danger"
-              style="color: red"
+              class="text-danger mb-3"
             ></div>
 
             <div class="form-floating mb-3">
@@ -83,7 +82,7 @@
             <div
               th:if="${#fields.hasErrors('descripcion')}"
               th:errors="*{descripcion}"
-              class="text-danger"
+              class="text-danger mb-3"
               style="color: red"
             ></div>
 
@@ -100,7 +99,7 @@
             <div
               th:if="${#fields.hasErrors('anio')}"
               th:errors="*{anio}"
-              class="text-danger"
+              class="text-danger mb-3"
               style="color: red"
             ></div>
 
@@ -117,8 +116,7 @@
             <div
               th:if="${#fields.hasErrors('isbn')}"
               th:errors="*{isbn}"
-              class="text-danger"
-              style="color: red"
+              class="text-danger mb-3"
             ></div>
 
             <div class="form-floating mb-3">

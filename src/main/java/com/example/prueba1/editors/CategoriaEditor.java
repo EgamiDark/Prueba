@@ -16,8 +16,8 @@ public class CategoriaEditor extends PropertyEditorSupport{
 		
 		if(text != null && text.length()>0) {
 			try {
-				Integer id = Integer.parseInt(text);
-				this.setValue(categoriaService.obtenerCategoria(id));
+				Long id = Long.parseLong(text);
+				this.setValue(categoriaService.findOne(id));
 			}
 			catch(NumberFormatException e){
 				setValue(null);

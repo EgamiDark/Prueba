@@ -2,7 +2,6 @@ package com.example.prueba1.services;
 
 import java.util.List;
 
-import com.example.prueba1.models.domain.Autor;
 import com.example.prueba1.models.domain.Cliente;
 
 public interface ClienteService {

@@ -1,71 +1,54 @@
 package com.example.prueba1.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.prueba1.dao.LibroDAO;
 import com.example.prueba1.models.domain.Libro;
 
 @Service
 public class LibroServiceImplementacion implements LibroService{
 
-	private List<Libro> libros;
-	
-	public LibroServiceImplementacion() {
-		this.libros = new ArrayList<>();
-		// TODO Auto-generated constructor stub
-	}
+	@Autowired
+	private LibroDAO libroDAO;
 
+	// Obtiene todos los libros
+	@Transactional
 	@Override
-	public List<Libro> obtenerLibros() {
-		// TODO Auto-generated method stub
-		return this.libros;
+	public List<Libro> findAll() {
+		return (List<Libro>) libroDAO.findAll();
 	}
 
+	// Paginacion
+	@Transactional(readOnly = true)
 	@Override
-	public Libro obtenerLibro(Integer id) {
-		Libro result = null;
-		for(Libro libro : this.libros) {
-			if(id==libro.getId()) {
-				result = libro;
-				break;
-			}
-		}
-		return result;
+	public Page<Libro> findAll(Pageable pageable){
+		return libroDAO.findAll(pageable);
 	}
 
+	// Crear Libro
+	@Transactional
 	@Override
-	public void eliminarLibro(Integer id) {
-		// TODO Auto-generated method stub
-		for(Libro libro: this.libros) {
-			if(id ==libro.getId()) {
-				this.libros.remove(libro);
-				break;
-			}
-		}
+	public void save(Libro libro){
+		libroDAO.save(libro);
 	}
 
+	// Obtiene un solo libro por id
+	@Transactional(readOnly = true)
 	@Override
-	public void crearLibro(Libro libro) {
-		this.libros.add(libro);
-		
+	public Libro findOne(Long id) {
+		return libroDAO.findById(id).orElse(null);
 	}
 
+	// Eliminar Libro
+	@Transactional
 	@Override
-	public void modificarLibro(Libro libro) {
-		for(Libro lib:this.libros) {
-			if(libro.getId()==lib.getId()) {
-				lib.setTitulo(libro.getTitulo());
-				lib.setDescripcion(libro.getDescripcion());
-				lib.setAnio(libro.getAnio());
-				lib.setIsbn(libro.getIsbn());
-				lib.setCantPaginas(libro.getCantPaginas());
-				lib.setAutor(libro.getAutor());
-				lib.setCategoria(libro.getCategoria());
-			}
-		}
-		
+	public void delete(Libro libro) {
+		libroDAO.delete(libro);
 	}
-
 }
