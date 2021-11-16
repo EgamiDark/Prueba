@@ -170,6 +170,12 @@
               style="color: red"
             ></div>
 
+            <img
+              style="max-width: 25%"
+              th:src="@{'/uploads/libro' + ${imagen}}"
+              th:alt="${imagen}"
+            />
+
             <div class="mb-3">
               <label for="formFile" class="form-label">Imagen</label>
               <input
