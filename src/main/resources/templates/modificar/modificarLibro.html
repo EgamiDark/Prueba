@@ -10,6 +10,7 @@
             th:action="@{/modificarLibro}"
             th:object="${libro}"
             method="post"
+            enctype="multipart/form-data"
           >
             <div class="form-floating mb-3">
               <input
@@ -172,14 +173,13 @@
 
             <img
               style="max-width: 25%"
-              th:src="@{'/uploads/libro' + ${imagen}}"
-              th:alt="${imagen}"
+              th:src="@{'/uploads/libro/' + ${libro.imagen}}"
+              th:alt="${libro.imagen}"
             />
 
             <div class="mb-3">
               <label for="formFile" class="form-label">Imagen</label>
               <input
-                th:field="*{imagen}"
                 class="form-control"
                 type="file"
                 name="file"

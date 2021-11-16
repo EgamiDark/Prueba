@@ -100,32 +100,32 @@ public class LibroController {
         }
 
         if (!imagen.isEmpty()) {
-			String extension = "";
-			int index = imagen.getOriginalFilename().lastIndexOf('.');
+            String extension = "";
+            int index = imagen.getOriginalFilename().lastIndexOf('.');
 
-			if (index > 0) {
-				extension = imagen.getOriginalFilename().substring(index + 1);
-			}
+            if (index > 0) {
+                extension = imagen.getOriginalFilename().substring(index + 1);
+            }
 
-			String[] extensiones = { "png", "jpg", "jpeg" };
-			boolean contieneExtension = Arrays.stream(extensiones).anyMatch(extension::equals);
+            String[] extensiones = { "png", "jpg", "jpeg" };
+            boolean contieneExtension = Arrays.stream(extensiones).anyMatch(extension::equals);
 
-			if (!contieneExtension) {
-				model.addAttribute("extension", "La extension no corresponde a una Imagen");
-				return "crear/crearLibro";
-			}
+            if (!contieneExtension) {
+                model.addAttribute("extension", "La extension no corresponde a una Imagen");
+                return "crear/crearLibro";
+            }
 
-			String uniqueFileName = UUID.randomUUID().toString() + "_" + imagen.getOriginalFilename();
-			Path rootPath = Paths.get("uploads/libro").resolve(uniqueFileName);
-			Path rootAbsolutePath = rootPath.toAbsolutePath();
+            String uniqueFileName = UUID.randomUUID().toString() + "_" + imagen.getOriginalFilename();
+            Path rootPath = Paths.get("uploads/libro").resolve(uniqueFileName);
+            Path rootAbsolutePath = rootPath.toAbsolutePath();
 
-			try {
-				Files.copy(imagen.getInputStream(), rootAbsolutePath);
-				libro.setImagen(uniqueFileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+            try {
+                Files.copy(imagen.getInputStream(), rootAbsolutePath);
+                libro.setImagen(uniqueFileName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         libroService.save(libro);
 
@@ -133,24 +133,24 @@ public class LibroController {
     }
 
     @GetMapping(value = "/uploads/libro/{filename:.+}")
-	public ResponseEntity<Resource> getImagenAutor(@PathVariable String filename) {
-		Path pathImagen = Paths.get("uploads/libro").resolve(filename).toAbsolutePath();
+    public ResponseEntity<Resource> getImagenAutor(@PathVariable String filename) {
+        Path pathImagen = Paths.get("uploads/libro").resolve(filename).toAbsolutePath();
 
-		Resource resource = null;
+        Resource resource = null;
 
-		try {
-			resource = new UrlResource(pathImagen.toUri());
-			if (!resource.exists() && !resource.isReadable()) {
-				throw new RuntimeException("Error:  La imagen no se pudo cargar" + pathImagen.getFileName());
-			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
+        try {
+            resource = new UrlResource(pathImagen.toUri());
+            if (!resource.exists() && !resource.isReadable()) {
+                throw new RuntimeException("Error:  La imagen no se pudo cargar" + pathImagen.getFileName());
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
-	}
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
 
     @GetMapping(value = "/modificarLibro/{id}")
     public String modificarLibro(@PathVariable(value = "id") Long id, Map<String, Object> model,
@@ -174,14 +174,56 @@ public class LibroController {
         return "modificar/modificarLibro";
     }
 
-    /*
-     * @PostMapping("/modLibro") public String mobLibro(@Valid Libro libro,
-     * BindingResult result, Model model, SessionStatus status) { if
-     * (result.hasErrors()) { return "modificar/modificarLibro"; }
-     * libroService.modificarLibro(libro);
-     * 
-     * return "listas/listaLibro"; }
-     */
+    @PostMapping("/modificarLibro")
+    public String modificarLibro(@Valid Libro libro, BindingResult result, Model model, SessionStatus status,
+            @RequestParam("file") MultipartFile imagen) {
+        if (result.hasErrors()) {
+            return "modificar/modificarLibro";
+        }
+
+        Libro libroFromDB = libroService.findOne(libro.getId());
+        String nombreImagen = libroFromDB.getImagen().split("_", 2)[1];
+        String nombreImagenMultipart = imagen.getOriginalFilename();
+
+        if (!imagen.isEmpty()) {
+            if (nombreImagen.equals(nombreImagenMultipart)) {
+                libro.setImagen(libroFromDB.getImagen());
+            } else {
+
+                String extension = "";
+                int index = imagen.getOriginalFilename().lastIndexOf('.');
+
+                if (index > 0) {
+                    extension = imagen.getOriginalFilename().substring(index + 1);
+                }
+
+                String[] extensiones = { "png", "jpg", "jpeg" };
+                boolean contieneExtension = Arrays.stream(extensiones).anyMatch(extension::equals);
+
+                if (!contieneExtension) {
+                    model.addAttribute("extension", "La extension no corresponde a una Imagen");
+                    return "modificar/modificarLibro";
+                }
+
+                String uniqueFileName = UUID.randomUUID().toString() + "_" + imagen.getOriginalFilename();
+                Path rootPath = Paths.get("uploads/libro").resolve(uniqueFileName);
+                Path rootAbsolutePath = rootPath.toAbsolutePath();
+                try {
+                    Files.copy(imagen.getInputStream(), rootAbsolutePath);
+                    libro.setImagen(uniqueFileName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            // Si no viene una imagen en el multipart
+            libro.setImagen(libroFromDB.getImagen());
+        }
+
+        libroService.save(libro);
+
+        return "redirect:indexLibro";
+    }
 
     @GetMapping("/eliminarLibro/{id}")
     public String eliminarLibro(@SessionAttribute(name = "libro", required = false) Libro libro,
