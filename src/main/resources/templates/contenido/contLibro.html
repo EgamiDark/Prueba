@@ -20,7 +20,8 @@
               <th width="20%">Titulo</th>
               <th width="30%">Descripcion</th>
               <th width="20%">Año</th>
-              <th width="20%">Cant. Paginas</th>
+              <th width="10%">Cant. Paginas</th>
+              <th width="10%">Precio</th>
               <th width="10%">Acción</th>
             </tr>
           </thead>
@@ -30,6 +31,7 @@
               <td th:text="${libro.descripcion}"></td>
               <td th:text="${libro.anio}"></td>
               <td th:text="${libro.cantPaginas}"></td>
+              <td th:text="${libro.precio}"></td>
               <td>
                 <a
                   class="btn btn-primary"

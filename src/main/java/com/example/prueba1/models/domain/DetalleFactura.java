@@ -18,7 +18,6 @@ public class DetalleFactura {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Column(name = "total_detalle")
     private Double totalDetalle;
 

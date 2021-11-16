@@ -53,12 +53,14 @@ public class Libro {
 	@NotNull
 	@Range(min = 1)
 	private Integer cantPaginas;
-
+	@NotNull
+	@Range(min = 1)
+	private Integer precio;
 	public Libro() {
 	}
 
 	public Libro(Long id, String titulo, Autor autor, Categoria categoria, String descripcion, String imagen,
-			Integer anio, String isbn, Integer cantPaginas) {
+			Integer anio, String isbn, Integer cantPaginas,Integer precio) {
 		this.id = id;
 		this.titulo = titulo;
 		this.autor = autor;
@@ -140,6 +142,12 @@ public class Libro {
 
 	public void setCantPaginas(Integer cantPaginas) {
 		this.cantPaginas = cantPaginas;
+	}	
+	public Integer getPrecio() {
+		return precio;
+	}
+	public void setPrecio(Integer precio) {
+		this.precio = precio;
 	}
 
 }

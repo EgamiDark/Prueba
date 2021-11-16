@@ -1,30 +1,33 @@
 package com.example.prueba1.util;
 
 public class PageItem {
-    private int numero;
-    private boolean actual;
-    
-    public PageItem() {
-    }
+	private int numero;
 
-    public PageItem(int numero, boolean actual) {
-        this.numero = numero;
-        this.actual = actual;
-    }
+	private boolean actual;
 
-    public int getNumero() {
-        return numero;
-    }
+	public int getNumero() {
+		return numero;
+	}
 
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
 
-    public boolean isActual() {
-        return actual;
-    }
+	public boolean isActual() {
+		return actual;
+	}
 
-    public void setActual(boolean actual) {
-        this.actual = actual;
-    }
+	public void setActual(boolean actual) {
+		this.actual = actual;
+	}
+
+	public PageItem(int numero, boolean actual) {
+
+		this.numero = numero;
+		this.actual = actual;
+	}
+
+	public PageItem() {
+
+	}
 }

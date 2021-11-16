@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -29,18 +30,20 @@ public class Factura {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @NotEmpty
     private String descripcion;
+    
     private String observacion;
 
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    @Column(name = "fecha_ingreso")
-    private Date fechaIngreso;
+    private String fechaIngreso;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Cliente cliente;
+    
+    @Range(min = 1)
+    @Column(name = "monto_total")
+    private Integer montoTotal;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "factura_id")
@@ -50,14 +53,15 @@ public class Factura {
         this.detalles = new ArrayList<DetalleFactura>();
     }
 
-    public Factura(Long id, @NotEmpty String descripcion, String observacion, @NotNull Date fechaIngreso,
-            Cliente cliente, List<DetalleFactura> detalles) {
+    public Factura(Long id,String descripcion, String observacion,String fechaIngreso,
+            Cliente cliente, List<DetalleFactura> detalles, Integer montoTotal) {
         this.id = id;
         this.descripcion = descripcion;
         this.observacion = observacion;
         this.fechaIngreso = fechaIngreso;
         this.cliente = cliente;
         this.detalles = detalles;
+        this.montoTotal = montoTotal;
     }
 
     public Long getId() {
@@ -84,11 +88,11 @@ public class Factura {
         this.observacion = observacion;
     }
 
-    public Date getFechaIngreso() {
+    public String getFechaIngreso() {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(Date fechaIngreso) {
+    public void setFechaIngreso(String fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
 
@@ -106,6 +110,14 @@ public class Factura {
 
     public void setDetalles(List<DetalleFactura> detalles) {
         this.detalles = detalles;
+    }
+    
+    public Integer getMontoTotal() {
+        return montoTotal;
+    }
+
+    public void setMontoTotal(Integer montoTotal) {
+        this.montoTotal = montoTotal;
     }
 
     

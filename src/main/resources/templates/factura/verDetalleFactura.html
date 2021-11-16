@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head th:replace="index :: head"></head>
+
+<body class="p-5">
+	<div class="ms-5 me-5">
+		<div class="row">
+			<div class="col-9">
+				<h1 th:text="'Detalles de la factura'"></h1 >
+				<h1 th:text="'Numero folio: '+${factura.id}"></h1 >
+			</div>
+		</div>
+		<div class="mt-3">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th width="3%">Id</th>
+						<th width="25%">Libro</th>
+						<th width="10%">Cantidad</th>
+						<th width="15%">Total Importe</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="detalleFactura : ${detallesFactura}">
+						<td th:text="${detalleFactura.id}"></td>
+						<td th:text="${detalleFactura.libro.descripcion}"></td>
+						<td th:text="${detalleFactura.cantidad}"></td>
+						<td th:text="${detalleFactura.totalDetalle}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -6,92 +6,88 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 public class PageRender<T> {
-    private String url;
-    private Page<T> page;
-    private int totalPaginas;
-    private int itemsPaginas;
-    private int pagActual;
-    private List<PageItem> paginas;
+	private String url;
 
-    public PageRender() {
-    }
-    
-    public PageRender(String url, Page<T> page) {
-        this.url = url;
-        this.page = page;
-        this.paginas = new ArrayList<PageItem>();
+	private Page<T> page;
 
-        itemsPaginas = page.getSize();
-        totalPaginas = page.getTotalPages();
-        pagActual = page.getNumber();
+	private int totalPaginas;
 
-        int desde, hasta;
+	private int numElementosPorPagina;
 
-        if (totalPaginas <= itemsPaginas) {
-            desde = 1;
-            hasta = totalPaginas;
-        } else {
-            if (pagActual <= itemsPaginas/2) {
-                desde = 1;
-                hasta = itemsPaginas;
-            } else if (pagActual >= totalPaginas - itemsPaginas/2) {
-                desde = totalPaginas - itemsPaginas + 1;
-                hasta = itemsPaginas;
-            } else {
-                desde = pagActual - itemsPaginas/2;
-                hasta = itemsPaginas;
-            }
-        }
+	private int paginaActual;
 
-        for (int i = 0; i < hasta; i++) {
-            paginas.add(new PageItem(desde+i, pagActual == desde + i));
-        }
-    }
+	private List<PageItem> paginas;
 
-    public String getUrl() {
-        return url;
-    }
+	public PageRender(String url, Page<T> page) {
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+		this.url = url;
+		this.page = page;
+		this.paginas = new ArrayList<PageItem>();
 
-    public Page<T> getPage() {
-        return page;
-    }
+		numElementosPorPagina = page.getSize();
+		totalPaginas = page.getTotalPages();
+		paginaActual = page.getNumber() + 1;
 
-    public void setPage(Page<T> page) {
-        this.page = page;
-    }
+		int desde, hasta;
 
-    public int getTotalPaginas() {
-        return totalPaginas;
-    }
+		if (totalPaginas <= numElementosPorPagina) {
+			desde = 1;
+			hasta = totalPaginas;
 
-    public int getItemsPaginas() {
-        return itemsPaginas;
-    }
+		} else {
+			if (paginaActual <= numElementosPorPagina / 2) {
+				desde = 1;
+				hasta = numElementosPorPagina;
+			} else if (paginaActual >= totalPaginas - numElementosPorPagina / 2) {
+				desde = totalPaginas - numElementosPorPagina + 1;
+				hasta = numElementosPorPagina;
+			} else {
+				desde = paginaActual - numElementosPorPagina / 2;
+				hasta = numElementosPorPagina;
+			}
+		}
 
-    public int getPagActual() {
-        return pagActual;
-    }
+		for (int i = 0; i < hasta; i++) {
+			paginas.add(new PageItem(desde + i, paginaActual == desde + i));
+		}
+	}
 
-    public List<PageItem> getPaginas() {
-        return paginas;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public boolean isFirst() {
+	public Page<T> getPage() {
+		return page;
+	}
+
+	public int getTotalPaginas() {
+		return totalPaginas;
+	}
+
+	public int getNumElementosPorPagina() {
+		return numElementosPorPagina;
+	}
+
+	public int getPaginaActual() {
+		return paginaActual;
+	}
+
+	public List<PageItem> getPaginas() {
+		return paginas;
+	}
+
+	public boolean isFirst() {
 		return page.isFirst();
 	}
-	
+
 	public boolean isLast() {
 		return page.isLast();
 	}
-	
+
 	public boolean isHasNext() {
 		return page.hasNext();
 	}
-	
+
 	public boolean isHasPrevious() {
 		return page.hasPrevious();
 	}

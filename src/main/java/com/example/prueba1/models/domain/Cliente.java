@@ -27,20 +27,21 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @NotEmpty
     private String nombre;
-
+    @NotNull
     @NotEmpty
     private String apellido;
+    @NotNull
     @NotEmpty
     private String email;
+    @NotNull
+    @NotEmpty
     private String direccion;
 
-    @NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
-	@Column(name="create_at")
-    private Date create_at;
+    private String create_at;
+    private String imagen;
 
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Factura> facturas;
@@ -49,13 +50,14 @@ public class Cliente {
         this.facturas = new ArrayList<Factura>();
     }
 
-    public Cliente(Long id, String nombre, String apellido, String email, String direccion, Date create_at) {
+    public Cliente(Long id, String nombre, String apellido, String email, String direccion, String create_at, String imagen) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.direccion = direccion;
         this.create_at = create_at;
+        this.imagen = imagen;
     }
 
     public Long getId() {
@@ -98,11 +100,19 @@ public class Cliente {
         this.direccion = direccion;
     }
 
-    public Date getCreate_at() {
+    public String getCreate_at() {
         return create_at;
     }
 
-    public void setCreate_at(Date create_at) {
+    public void setCreate_at(String create_at) {
         this.create_at = create_at;
+    }
+    
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

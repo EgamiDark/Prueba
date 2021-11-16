@@ -140,6 +140,22 @@
               class="text-danger"
               style="color: red"
             ></div>
+            <div class="form-floating mb-3">
+              <input
+                name="precio"
+                id="precio"
+                type="number"
+                th:field="*{precio}"
+                class="form-control"
+              />
+              <label for="precio">Precio $$</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('precio')}"
+              th:errors="*{precio}"
+              class="text-danger"
+              style="color: red"
+            ></div>
 
             <div class="mb-3">
               <label for="formFile" class="form-label">Imagen</label>

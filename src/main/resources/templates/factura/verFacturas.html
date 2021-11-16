@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head th:replace="index :: head"></head>
+
+<body class="p-5">
+	<div class="ms-5 me-5">
+		<div class="row">
+			<div class="col-9">
+				<h1 th:text="'Listado de facturas'"></h1 >
+				
+				<h1 th:text="'Cliente: '+${cliente.nombre}+' '+${cliente.apellido}"></h1 >
+				<img style="max-width: 25%;border:10px solid #666; border-radius:150px;" th:src="'/uploads/cliente/'+${cliente.imagen}"
+				th:alt="${cliente.imagen}">
+			</div>
+		</div>
+		<div class="mt-3">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th width="3%">Id</th>
+						<th width="15%">Fecha Ingreso</th>
+						<th width="25%">Descripción</th>
+						<th width="15%">Observación</th>
+						<th width="15%">Monto Total</th>
+						<th width="15%">Acción</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="factura : ${facturas}">
+						<td th:text="${factura.id}"></td>
+						<td th:text="${factura.fechaIngreso}"></td>
+						<td th:text="${factura.descripcion}"></td>
+						<td th:text="${factura.observacion}"></td>
+						<td th:text="'$'+${factura.montoTotal}"></td>
+						<td>
+							<a class="btn btn-primary mb-1" th:href="@{'/verDetalle/' + ${factura.id}}">
+								Ver Detalles
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+
+</html>
