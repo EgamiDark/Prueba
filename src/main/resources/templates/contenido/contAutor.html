@@ -34,12 +34,6 @@
               <td th:text="${autor.nacionalidad}"></td>
               <td>
                 <a
-                  class="btn btn-primary"
-                  th:href="@{'/modificarAut/' + ${autor.id}}"
-                >
-                  <i class="fas fa-edit"></i>
-                </a>
-                <a
                   id="btnEliminar"
                   th:data-value="${autor.id}"
                   class="btn btn-danger"

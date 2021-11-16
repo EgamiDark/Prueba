@@ -6,7 +6,12 @@
       <div class="card ms-5 me-5">
         <div class="card-body">
           <h1 class="mb-4">Crear Autor</h1>
-          <form th:action="@{/formAutor}" th:object="${autor}" method="post">
+          <form
+            th:action="@{/formAutor}"
+            th:object="${autor}"
+            method="post"
+            enctype="multipart/form-data"
+          >
             <div class="form-floating mb-3">
               <input
                 name="nombre"
@@ -53,7 +58,6 @@
               th:if="${#fields.hasErrors('nacionalidad')}"
               th:errors="*{nacionalidad}"
               class="text-danger"
-              style="color: red"
             ></div>
 
             <div class="form-floating mb-3">
@@ -70,7 +74,6 @@
               th:if="${#fields.hasErrors('fechaNacimiento')}"
               th:errors="*{fechaNacimiento}"
               class="text-danger"
-              style="color: red"
             ></div>
 
             <div class="form-floating mb-3">
@@ -87,8 +90,15 @@
               th:if="${#fields.hasErrors('seudonimo')}"
               th:errors="*{seudonimo}"
               class="text-danger"
-              style="color: red"
             ></div>
+
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Imagen</label>
+              <input class="form-control" type="file" name="file" />
+            </div>
+            <div th:if="${extension != null}" class="alert alert-danger" role="alert">
+              <strong>La extension no corresponde a una Imagen</strong>
+            </div>
 
             <input type="submit" value="Crear Autor" class="btn btn-primary" />
           </form>

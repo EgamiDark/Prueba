@@ -43,6 +43,12 @@ public class CategoriaServiceImplementacion implements CategoriaService{
 
 	@Transactional
 	@Override
+	public void update(Categoria categoria){
+		categoriaDAO.save(categoria);
+	}
+
+	@Transactional
+	@Override
 	public void delete(Long id) {
 		Categoria categoriaDelete = categoriaDAO.findById(id).orElse(null);
 		categoriaDAO.delete(categoriaDelete);

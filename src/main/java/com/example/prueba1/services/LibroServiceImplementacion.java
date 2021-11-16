@@ -45,6 +45,13 @@ public class LibroServiceImplementacion implements LibroService{
 		return libroDAO.findById(id).orElse(null);
 	}
 
+	// Actualizar Libro
+	@Transactional
+	@Override
+	public void update(Libro libro) {
+		libroDAO.save(libro);
+	}
+
 	// Eliminar Libro
 	@Transactional
 	@Override

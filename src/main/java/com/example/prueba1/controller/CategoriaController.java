@@ -82,15 +82,16 @@ public class CategoriaController {
 		return "modificar/modificarCategoria";
 	}
 
-	/* @PostMapping("/modCategoria")
+	@PostMapping("/modCategoria")
 	public String mobCategoria(@Valid Categoria categoria, BindingResult result, Model model, SessionStatus status) {
 		if (result.hasErrors()) {
 			return "modificar/modificarCategoria";
 		}
-		categoriaService.modificarCategoria(categoria);
 
-		return "listas/listaCategoria";
-	} */
+		categoriaService.save(categoria);
+
+		return "redirect:indexCategoria";
+	}
 
 	@GetMapping("/eliminarCategoria/{id}")
 	public String eliminarCategoria(@SessionAttribute(name = "categoria", required = false) Categoria categoria,

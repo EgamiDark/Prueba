@@ -12,5 +12,6 @@ public interface LibroService {
 	public List<Libro> findAll();
 	public void save(Libro libro);
 	public Libro findOne(Long id);
+	public void update(Libro libro);
 	public void delete(Libro libro);
 }

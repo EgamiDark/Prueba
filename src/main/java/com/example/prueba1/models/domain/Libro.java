@@ -21,7 +21,7 @@ import org.hibernate.validator.constraints.Range;
 public class Libro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@NotBlank
 	@NotEmpty
@@ -30,16 +30,18 @@ public class Libro {
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="autor_id")
+	@JoinColumn(name = "autor_id")
 	private Autor autor;
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="categoria_id")
+	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 
 	@NotEmpty
 	private String descripcion;
+
+	private String imagen;
 
 	@NotNull
 	private Integer anio;
@@ -53,26 +55,26 @@ public class Libro {
 	private Integer cantPaginas;
 
 	public Libro() {
-
 	}
 
-	public Libro(Integer id, String titulo, Autor autor, Categoria categoria, String descripcion, Integer anio,
-			String isbn, Integer cantPaginas) {
+	public Libro(Long id, String titulo, Autor autor, Categoria categoria, String descripcion, String imagen,
+			Integer anio, String isbn, Integer cantPaginas) {
 		this.id = id;
 		this.titulo = titulo;
 		this.autor = autor;
 		this.categoria = categoria;
 		this.descripcion = descripcion;
+		this.imagen = imagen;
 		this.anio = anio;
 		this.isbn = isbn;
 		this.cantPaginas = cantPaginas;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -106,6 +108,14 @@ public class Libro {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 
 	public Integer getAnio() {

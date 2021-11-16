@@ -6,7 +6,12 @@
       <div class="card ms-5 me-5">
         <div class="card-body">
           <h1 class="mb-4">Crear Libro</h1>
-          <form th:action="@{/formLibro}" th:object="${libro}" method="post">
+          <form
+            th:action="@{/formLibro}"
+            th:object="${libro}"
+            method="post"
+            enctype="multipart/form-data"
+          >
             <div class="form-floating mb-3">
               <input
                 name="titulo"
@@ -135,6 +140,12 @@
               class="text-danger"
               style="color: red"
             ></div>
+
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Imagen</label>
+              <input class="form-control" type="file" name="file" />
+            </div>
+
             <input type="submit" value="Crear Libro" class="btn btn-primary" />
           </form>
         </div>

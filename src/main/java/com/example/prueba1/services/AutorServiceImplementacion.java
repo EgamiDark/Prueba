@@ -50,9 +50,6 @@ public class AutorServiceImplementacion implements AutorService{
 	@Override
 	public void delete(String id) {
 		Autor autor = autorDAO.findByStringId(id);
-		System.out.println("============================================================");
-		System.out.println(autor);
-		System.out.println("============================================================");
 		autorDAO.delete(autor);
 	}
 

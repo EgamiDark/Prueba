@@ -1,33 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Modificar Categoria</title>
-</head>
-<body>
-	<div style="color: white; display: flex; justify-content: center;">
-		<form th:action="@{/modCategoria}" th:object="${categoria}" method="post"
-			style="padding: 50px;">
-			<h1>Modificar Categoria</h1>
-			<div>
-				<label for="id">Identificador</label>
-			</div>
-			<div>
-				<input name="id" id="id" type="number" th:field="*{id}"
-					th:value="${categoria.id}" readonly="readonly">
-			</div>
-			<div>
-				<label for="descripcion">Descripción</label>
-			</div>
-			<div>
-				<input name="descripcion" id="descripcion" type="text" th:field="*{descripcion}"
-					th:value="${categoria.descripcion}">
-			</div>
-			<div th:if="${#fields.hasErrors('descripcion')}" th:errors=*{descripcion} class="text-danger" style="color:red"></div>
-			<div>
-				<input type="submit" value="Modificar Categoria">
-			</div>
-		</form>
-	</div>
-</body>
+  <head th:replace="index :: head"></head>
+  <body class="p-5">
+    <div class="ms-5 me-5">
+      <div class="card ms-5 me-5">
+        <div class="card-body">
+          <h1 class="mb-4">Modificar Categoria</h1>
+          <form
+            th:action="@{/modCategoria}"
+            th:object="${categoria}"
+            method="post"
+          >
+            <div class="form-floating mb-3">
+              <input
+                name="id"
+                id="id"
+                type="number"
+                th:field="*{id}"
+                th:value="${categoria.id}"
+                readonly="readonly"
+                class="form-control"
+              />
+              <label for="id">Identificador</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                name="descripcion"
+                id="descripcion"
+                type="text"
+                th:field="*{descripcion}"
+                th:value="${categoria.descripcion}"
+                class="form-control"
+              />
+              <label for="descripcion">Descripción</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('descripcion')}"
+              th:errors="*{descripcion}"
+              class="text-danger"
+            ></div>
+
+            <input
+              type="submit"
+              value="Modificar Categoria"
+              class="btn btn-primary"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

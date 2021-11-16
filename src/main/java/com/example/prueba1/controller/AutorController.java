@@ -1,13 +1,23 @@
 package com.example.prueba1.controller;
 
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.prueba1.editors.AutorEditor;
 import com.example.prueba1.models.domain.Autor;
@@ -66,9 +77,38 @@ public class AutorController {
 	}
 
 	@PostMapping("/formAutor")
-	public String formAutor(@Valid Autor autor, BindingResult result, Model model, SessionStatus status) {
+	public String formAutor(@Valid Autor autor, BindingResult result, Model model, SessionStatus status,
+			@RequestParam("file") MultipartFile imagen) {
 		if (result.hasErrors()) {
 			return "crear/crearAutor";
+		}
+
+		if (!imagen.isEmpty()) {
+			String extension = "";
+			int index = imagen.getOriginalFilename().lastIndexOf('.');
+
+			if (index > 0) {
+				extension = imagen.getOriginalFilename().substring(index + 1);
+			}
+
+			String[] extensiones = { "png", "jpg", "jpeg" };
+			boolean contieneExtension = Arrays.stream(extensiones).anyMatch(extension::equals);
+
+			if (!contieneExtension) {
+				model.addAttribute("extension", "La extension no corresponde a una Imagen");
+				return "crear/crearAutor";
+			}
+
+			String uniqueFileName = UUID.randomUUID().toString() + "_" + imagen.getOriginalFilename();
+			Path rootPath = Paths.get("uploads/autor").resolve(uniqueFileName);
+			Path rootAbsolutePath = rootPath.toAbsolutePath();
+
+			try {
+				Files.copy(imagen.getInputStream(), rootAbsolutePath);
+				autor.setImagen(uniqueFileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		String primerasTresLetras = autor.getNombre().substring(0, 3).toUpperCase();
@@ -81,40 +121,42 @@ public class AutorController {
 		return "redirect:indexAutor";
 	}
 
-	@GetMapping("/modificarAut/{id}")
-	public String modificarAutor(@SessionAttribute(name = "autor", required = false) Autor autor,
-			@PathVariable String id, Model model) {
-		autor = autorService.findOne(id);
-		model.addAttribute("autor", autor);
-		return "modificar/modificarAutor";
-	}
-
-	/* @PostMapping("/modAutor")
-	public String mobAutor(@Valid Autor autor, BindingResult result, Model model, SessionStatus status) {
-		if (result.hasErrors()) {
-            return "modificar/modificarAutor";
-        }
-		autorService.modificarAutor(autor);
-		
-		return "listas/listaAutor";
-	} */
-
 	@GetMapping("/eliminarAutor/{id}")
 	public String eliminarAutor(@SessionAttribute(name = "autor", required = false) Autor autor,
-			@PathVariable String id, Model model) {		
+			@PathVariable String id, Model model) {
 		autorService.delete(id);
 		setValues(0, model);
 		return "contenido/contAutor";
 	}
 
-	public void setValues(int page, Model model) {
-        Pageable pageRequest = PageRequest.of(page, 5);
+	@GetMapping(value = "/uploads/autor/{filename:.+}")
+	public ResponseEntity<Resource> getImagenAutor(@PathVariable String filename) {
+		Path pathImagen = Paths.get("uploads/autor").resolve(filename).toAbsolutePath();
 
-        Page<Autor> autores = autorService.findAll(pageRequest);
-        PageRender<Autor> pageRender = new PageRender<>("/indexAutor", autores);
-        model.addAttribute("autores", autores);
-        model.addAttribute("page", pageRender);
-    }
+		Resource resource = null;
+
+		try {
+			resource = new UrlResource(pathImagen.toUri());
+			if (!resource.exists() && !resource.isReadable()) {
+				throw new RuntimeException("Error:  La imagen no se pudo cargar" + pathImagen.getFileName());
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
+
+	public void setValues(int page, Model model) {
+		Pageable pageRequest = PageRequest.of(page, 5);
+
+		Page<Autor> autores = autorService.findAll(pageRequest);
+		PageRender<Autor> pageRender = new PageRender<>("/indexAutor", autores);
+		model.addAttribute("autores", autores);
+		model.addAttribute("page", pageRender);
+	}
 
 	@GetMapping("/listaAutor")
 	public String listaAutor(Model model) {
