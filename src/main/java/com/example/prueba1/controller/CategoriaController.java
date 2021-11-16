@@ -44,15 +44,7 @@ public class CategoriaController {
 
 	@RequestMapping(value = "indexCategoria", method = RequestMethod.GET)
 	public String indexCategoria(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
-		Pageable pager = PageRequest.of(page, 5);
-
-		Page<Categoria> libros = categoriaService.findAll(pager);
-		PageRender<Categoria> pageRender = new PageRender<>("/index", libros);
-
-		model.addAttribute("titulo", "Listado de libros");
-		model.addAttribute("libros", libros);
-		model.addAttribute("page", pageRender);
-		
+		setValues(page, model);
 		return "contenido/contCategoria";
 	}
 

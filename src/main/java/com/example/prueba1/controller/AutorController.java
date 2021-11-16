@@ -55,16 +55,7 @@ public class AutorController {
 
 	@RequestMapping(value = "indexAutor", method = RequestMethod.GET)
 	public String indexAutor(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
-		Pageable pager = PageRequest.of(page, 5);
-
-		Page<Autor> autores = autorService.findAll(pager);
-		PageRender<Autor> pageRender = new PageRender<>("/index", autores);
-
-		model.addAttribute("titulo", "Listado de autores");
-		model.addAttribute("autores", autores);
-		model.addAttribute("page", pageRender);
-
-		System.out.println(pageRender);
+		setValues(page, model);
 
 		return "contenido/contAutor";
 	}
@@ -80,6 +71,22 @@ public class AutorController {
 	public String formAutor(@Valid Autor autor, BindingResult result, Model model, SessionStatus status,
 			@RequestParam("file") MultipartFile imagen) {
 		if (result.hasErrors()) {
+			if (!imagen.isEmpty()) {
+				String extension = "";
+				int index = imagen.getOriginalFilename().lastIndexOf('.');
+
+				if (index > 0) {
+					extension = imagen.getOriginalFilename().substring(index + 1);
+				}
+
+				String[] extensiones = { "png", "jpg", "jpeg" };
+				boolean contieneExtension = Arrays.stream(extensiones).anyMatch(extension::equals);
+
+				if (!contieneExtension) {
+					model.addAttribute("extension", "La extension no corresponde a una Imagen");
+					return "crear/crearAutor";
+				}
+			}
 			return "crear/crearAutor";
 		}
 

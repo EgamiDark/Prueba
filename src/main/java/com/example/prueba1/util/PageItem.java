@@ -1,8 +1,9 @@
 package com.example.prueba1.util;
 
 public class PageItem {
+	
 	private int numero;
-
+	
 	private boolean actual;
 
 	public int getNumero() {
@@ -22,12 +23,13 @@ public class PageItem {
 	}
 
 	public PageItem(int numero, boolean actual) {
-
+	
 		this.numero = numero;
 		this.actual = actual;
 	}
 
 	public PageItem() {
 
-	}
+	}	
+
 }
