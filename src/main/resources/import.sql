@@ -10,3 +10,9 @@ INSERT INTO prueba2.categorias (id,descripcion) VALUES (5,'COMEDIA');
 
 INSERT INTO prueba2.libros (id,anio,cant_paginas,descripcion,isbn,precio,titulo,autor_id,categoria_id) VALUES (1, 2020, 300, 'libro de drama', '123',10000,'La rosa de guadalupe', 'JUA1999', 1);
 INSERT INTO prueba2.libros (id,anio,cant_paginas,descripcion,isbn,precio,titulo,autor_id,categoria_id) VALUES (2, 2021, 500, 'Historias de un gato', '123',30000, 'Neko no Mamushi', 'MAT1998', 4);
+
+INSERT INTO prueba2.authorities (id,authority) VALUES(1, 'ROLE_ADMIN');
+INSERT INTO prueba2.authorities (id,authority) VALUES(2, 'ROLE_USER');
+
+INSERT INTO prueba2.users VALUES(1, 1, '$2a$10$WFuaTEudUoCugT2Slt0UsO3PWr2bwWX4XSPMi20GrbGFcgp687jUW', 'Usuario1',1);
+INSERT INTO prueba2.users VALUES(2, 1, '$2a$10$WFuaTEudUoCugT2Slt0UsO3PWr2bwWX4XSPMi20GrbGFcgp687jUW', 'Usuario2',2);

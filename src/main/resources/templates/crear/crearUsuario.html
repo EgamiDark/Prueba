@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+  <head th:replace="index :: head"></head>
+  <body class="p-5">
+    <div class="ms-5 me-5">
+      <div class="card ms-5 me-5">
+        <div class="card-body">
+          <h1 class="mb-4">Crear Usuario</h1>
+          <form
+            th:action="@{/formUsuario}"
+            th:object="${usuario}"
+            method="post"
+          >
+            <div class="form-floating mb-3">
+              <input
+                name="username"
+                id="username"
+                type="text"
+                th:field="*{username}"
+                class="form-control"
+              />
+              <label for="username">Nombre de Usuario</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('username')}"
+              th:errors="*{username}"
+              class="text-danger"
+              style="color: red"
+            ></div>
+
+            <div class="form-floating mb-3">
+              <input
+                name="password"
+                id="password"
+                type="text"
+                th:field="*{password}"
+                class="form-control"
+              />
+              <label for="password">Contraseña</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('password')}"
+              th:errors="*{password}"
+              class="text-danger"
+              style="color: red"
+            ></div>
+
+            <div class="form-floating mt-3 mb-3">
+              <select
+                id="rol"
+                type="text"
+                th:field="*{rol}"
+                class="form-select"
+              >
+                <option value="">Seleccione un rol</option>
+                <option
+                  th:each="rol: ${roles}"
+                  th:text="${rol.authority}"
+                  th:value="${rol.id}"
+                ></option>
+              </select>
+              <label for="rol">Rol</label>
+            </div>
+            <div
+              th:if="${#fields.hasErrors('rol')}"
+              th:errors="*{rol}"
+              class="text-danger"
+              style="color: red"
+            ></div>
+
+            <input
+              type="submit"
+              value="Crear Usuario"
+              class="btn btn-primary btn-lg"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

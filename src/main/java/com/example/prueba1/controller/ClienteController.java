@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +49,7 @@ public class ClienteController {
 		return "contenido/contCliente";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/crearCliente")
 	public String crearCliente(Model model) {
 		Cliente cliente = new Cliente();
@@ -111,6 +113,7 @@ public class ClienteController {
 		return "contenido/contCliente";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@GetMapping(value = "/uploads/cliente/{filename:.+}")
 	public ResponseEntity<Resource> verImagen(@PathVariable String filename) {
 
@@ -134,7 +137,8 @@ public class ClienteController {
 				.body(recurso);
 
 	}
-
+	
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/modificarCliente/{id}")
 	public String modificarCliente(@SessionAttribute(name = "cliente", required = false) Cliente cliente,
 			@PathVariable Long id, Model model) {
@@ -194,6 +198,7 @@ public class ClienteController {
 		return "redirect:indexCliente";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/eliminarCliente/{id}")
 	public String eliminarCliente(@SessionAttribute(name = "cliente", required = false) Cliente cliente,
 			@PathVariable Long id, Model model) {

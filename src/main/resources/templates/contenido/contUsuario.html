@@ -1,39 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
-  <head th:replace="index :: head"></head>
+<html>
+  <head th:replace="index :: head">
+    <meta charset="UTF-8" />
+    <title>Usuarios</title>
+  </head>
   <body class="p-5">
     <div class="ms-5 me-5">
       <div class="row">
         <div class="col-9">
-          <h1>Listado de Categorias</h1>
+          <h1>Listado de Usuarios</h1>
         </div>
         <div class="col-3 text-end">
-          <a class="btn btn-primary" href="/crearCategoria" target="miContenedor">
-            Crear Nueva
+          <a class="btn btn-primary" href="/crearUsuario" target="miContenedor">
+            Crear Nuevo
           </a>
         </div>
       </div>
-      <div class="mt-3">
+
+      <div class="table-responsive mt-3">
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th width="30%">Id</th>
-              <th width="60%">Descripcion</th>
+              <th width="20%">Nombre Usuario</th>
               <th width="10%">Acción</th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="categoria : ${categorias}">
-              <td th:text="${categoria.id}"></td>
-              <td th:text="${categoria.descripcion}"></td>
+            <tr th:each="usuario : ${usuarios}">
+              <td th:text="${usuario.username}"></td>
               <td>
                 <a
                   class="btn btn-primary"
-                  th:href="@{'/modificarCat/' + ${categoria.id}}"
+                  th:href="@{'/modificarUsuario/' + ${usuario.id}}"
                 >
                   <i class="fas fa-edit"></i>
                 </a>
-                <a class="btn btn-danger" th:onclick="|eliminar(${categoria.id})|">
+                <a
+                  class="btn btn-danger"
+                  th:onclick="|eliminar(${usuario.id})|"
+                >
                   <i class="fas fa-trash-alt"></i>
                 </a>
               </td>
@@ -48,7 +53,7 @@
     <script>
       function eliminar(id) {
         Swal.fire({
-          title: "¿Seguro que deseas eliminar esta categoria?",
+          title: "¿Seguro que deseas eliminar este usuario?",
           showDenyButton: true,
           confirmButtonText: "Si",
           confirmButtonColor: "#0d6efd",
@@ -56,8 +61,12 @@
         }).then((result) => {
           /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-            Swal.fire("Exito!", "Categoria eliminada correctamente", "success").then(() => {
-              location.href = "/eliminarCategoria/" + id;
+            Swal.fire(
+              "Exito!",
+              "Usuario eliminado correctamente",
+              "success"
+            ).then(() => {
+              location.href = "/eliminarUsuario/" + id;
             });
           } else if (result.isDenied) {
             Swal.fire("Los cambios no pudieron ser guardados", "", "info");

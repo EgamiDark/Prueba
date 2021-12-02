@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.prueba1.dao.UsuarioDAO;
+import com.example.prueba1.models.domain.Rol;
 import com.example.prueba1.models.domain.Usuario;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,28 +32,27 @@ public class JpaUserDetailsService implements UserDetailsService {
         Usuario usuario = usuarioDao.findByUsername(username);
 
         if (usuario == null) {
-            logger.error("Error login: no exiete el usuario '" + username + "' ");
+            logger.error("Error login: no existe el usuario '" + username + "' ");
             throw new UsernameNotFoundException("Username " + username + "no existe en el sistema!");
         }
 
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-        /*
-         * for(Rol role: usuario.getRoles()) {
-         * logger.info("Role: ".concat(role.getAuthority()));
-         * authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-         * 
-         * }
-         */
+        Rol role = usuario.getRol();
+        
+        if (role != null) {
+            logger.info("Role: ".concat(role.getAuthority()));
+            authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
+        }
 
         if (authorities.isEmpty()) {
             logger.error("Error login:  usuario '" + username + "' no tienen roles asignados");
             throw new UsernameNotFoundException("Username  '" + username + "'no existe en el sistema!");
         }
 
-        return new User(usuario.getNombreUsuario(),
-                usuario.getContrasenia(),
-                usuario.getActivo(),
+        return new User(usuario.getUsername(),
+                usuario.getPassword(),
+                usuario.getEnable(),
                 true,
                 true,
                 true,
