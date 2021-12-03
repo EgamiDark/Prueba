@@ -19,6 +19,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    
     @NotEmpty
     @Column(length = 30, unique = true)
     private String username;

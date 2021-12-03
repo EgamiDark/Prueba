@@ -11,25 +11,27 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginController {
 	@GetMapping("/login")
-	public String ingresar(@RequestParam(value = "error", required = false) String error,
+	public String login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout,
 			Model model,
 			Principal principal,
 			RedirectAttributes flash) {
 
 		if (principal != null) {
-
 			flash.addFlashAttribute("info", "ya ha iniciado sesion");
-			return "redirect:/index";
+			return "redirect:/contCliente";
 		}
 
 		if (error != null) {
-			model.addAttribute("error", "Error en login: nombre o pass no validos");
+			model.addAttribute("error", "El username o password ingresado no es valido");
+			flash.addFlashAttribute("error", "ERROR");
 
 		}
 
 		if (logout != null) {
-			model.addAttribute("success", "ha cerrado sesion con exito");
+			model.addAttribute("success", "Ha cerrado sesion con exito");
+			flash.addFlashAttribute("info", "Ha cerrado sesion con exito");
+			
 		}
 
 		return "contenido/contLogin";

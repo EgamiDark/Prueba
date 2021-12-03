@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
   <head th:replace="index :: head"></head>
-  <body class="p-5">
+  <body>
+  <header th:replace="index :: header"></header>
+    <br/>	
     <div class="ms-5 me-5">
       <div class="row">
         <div class="col-9">
           <h1>Listado de Autores</h1>
         </div>
         <div class="col-3 text-end">
-          <a class="btn btn-primary" href="/crearAutor" target="miContenedor">
+          <a class="btn btn-primary" href="/crearAutor">
             Crear Nuevo
           </a>
         </div>

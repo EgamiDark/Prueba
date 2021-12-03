@@ -17,11 +17,11 @@ public class UsuarioServiceImplementacion implements UsuarioService {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
-    @Autowired
+
+	@Autowired
 	private UsuarioDAO usuarioDAO;
 
-    @Override
+	@Override
 	public List<Usuario> findAll() {
 		return (List<Usuario>) usuarioDAO.findAll();
 	}
@@ -29,28 +29,52 @@ public class UsuarioServiceImplementacion implements UsuarioService {
 	// Paginacion
 	@Transactional(readOnly = true)
 	@Override
-	public Page<Usuario> findAll(Pageable pageable){
+	public Page<Usuario> findAll(Pageable pageable) {
 		return usuarioDAO.findAll(pageable);
 	}
 
-	// Crear Autor
+	// Crear Usuario
 	@Transactional
 	@Override
 	public void save(Usuario usuario) {
-		String password =  usuario.getPassword();
-		String bcryptPassword  = passwordEncoder.encode(password);
+		String password = usuario.getPassword();
+		String bcryptPassword = passwordEncoder.encode(password);
 		usuario.setPassword(bcryptPassword);
 		usuarioDAO.save(usuario);
 	}
 
-	// Encuentra un Autor por id
+	// Modificar Usuario
+		@Transactional
+		@Override
+		public void update(Usuario usuario) {
+			if(usuario.getPassword().equals("password")) {
+				Usuario usuarioFromDb = findOne(usuario.getId());
+				usuario.setPassword(usuarioFromDb.getPassword());
+			}
+			else {
+				String password = usuario.getPassword();
+				String bcryptPassword = passwordEncoder.encode(password);
+				usuario.setPassword(bcryptPassword);
+			}
+			
+			usuarioDAO.save(usuario);
+		}
+	
+	// Encuentra un Usuario por id
 	@Transactional
 	@Override
 	public Usuario findOne(Long id) {
 		return usuarioDAO.findById(id).orElse(null);
 	}
 
-	// Elimina a un Autor
+	// Encuentra un Usuario por userName
+	@Transactional
+	@Override
+	public Usuario findByUserName(String userName) {
+		return usuarioDAO.findByUsername(userName);
+	}
+
+	// Elimina a un Usuario
 	@Transactional
 	@Override
 	public void delete(Long id) {

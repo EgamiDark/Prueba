@@ -57,10 +57,14 @@ public class UsuarioController {
 			BindingResult result,
 			Model model,
 			SessionStatus status) {
+		Usuario newUsuario = usuarioService.findByUserName(usuario.getUsername());
+		if(newUsuario != null) {
+			model.addAttribute("ErrorUser", "Ya existe un usuario con este UserName");
+			return "crear/crearUsuario";
+		}
 		if (result.hasErrors()) {
 			return "crear/crearUsuario";
 		}
-
 		usuario.setEnable(true);
 
 		usuarioService.save(usuario);
@@ -81,13 +85,9 @@ public class UsuarioController {
 		if (result.hasErrors()) {
 			return "modificar/modificarUsuario";
 		}
+		
 
-		if (usuario.getPassword().equals("")) {
-			Usuario usuarioFromDb = usuarioService.findOne(usuario.getId());
-			usuario.setPassword(usuarioFromDb.getPassword());
-		}
-
-		usuarioService.save(usuario);
+		usuarioService.update(usuario);
 
 		return "redirect:indexUsuario";
 	}

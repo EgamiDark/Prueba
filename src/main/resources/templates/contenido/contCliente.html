@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://thymeleaf.org"
-  xmlns:sec="http://www.www.thymeleaf.org/extras/spring-security"
+  xmlns:sec="http://thymeleaf.org/extras/spring-security"
 >
   <head th:replace="index :: head"></head>
 
-  <body class="p-5">
+  <body>
+  <header th:replace="index :: header"></header>
+  <br/>
     <div class="ms-5 me-5">
       <div class="row">
         <div class="col-9">
@@ -16,7 +18,7 @@
             sec:authorize="hasRole('ROLE_ADMIN')"
             class="btn btn-primary"
             href="/crearCliente"
-            target="miContenedor"
+            
             >Crear Nuevo</a
           >
         </div>
@@ -42,7 +44,7 @@
               <td th:text="${cliente.create_at}"></td>
               <td th:text="${cliente.email}"></td>
               <td th:text="${cliente.direccion}"></td>
-              <td>
+              <td sec:authorize="hasRole('ROLE_ADMIN')">
                 <a
                   class="btn btn-primary mb-1"
                   sec:authorize="hasRole('ROLE_ADMIN')"
@@ -71,7 +73,7 @@
                 >
                   Eliminar Cliente
                 </a>
-              </td>
+              </tdsec:authorize="hasRole('ROLE_ADMIN')">
             </tr>
           </tbody>
         </table>

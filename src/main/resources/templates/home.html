@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
-<head>
+<html xmlns:th="http://thymeleaf.org" 
+  xmlns:sec="http://thymeleaf.org/extras/spring-security">
+<head th:replace="index :: head">
 <meta charset="UTF-8">
 <title>App Nico y Mati</title>
 </head>
-<body>
-<div style="text-align:center; color: white;padding:50px;">
+<body style="background-color: #272537;">
+<header th:replace="index :: header"></header>
+<div style="text-align:center; color: white;padding:50px;" >
 <h1>Libreria San Martin Cortes</h1>
 <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/LA-Logo-libri-wiki.png">
 </div>
 
-</body>
+</body >
 </html>

@@ -5,6 +5,8 @@
 <title>Modificar Autor</title>
 </head>
 <body>
+<header th:replace="index :: header"></header>
+<br/>
 	<div style="color: white; display: flex; justify-content: center;">
 		<form th:action="@{/modAutor}" th:object="${autor}" method="post"
 			style="padding: 50px;">

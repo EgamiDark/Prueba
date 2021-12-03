@@ -69,7 +69,7 @@ public class ClienteController {
 					extension = imagen.getOriginalFilename().substring(index + 1);
 				}
 
-				String[] extensiones = { "png", "jpg", "jpeg" };
+				String[] extensiones = {"PNG","JPG","JPEG", "png", "jpg", "jpeg" };
 				boolean contieneExtension = Arrays.stream(extensiones).anyMatch(extension::equals);
 
 				if (!contieneExtension) {
@@ -88,7 +88,7 @@ public class ClienteController {
 				extension = imagen.getOriginalFilename().substring(index + 1);
 			}
 
-			String[] extensiones = { "png", "jpg", "jpeg" };
+			String[] extensiones = {"PNG","JPG","JPEG", "png", "jpg", "jpeg" };
 			boolean contieneExtension = Arrays.stream(extensiones).anyMatch(extension::equals);
 
 			if (!contieneExtension) {
@@ -170,7 +170,7 @@ public class ClienteController {
 					extension = imagen.getOriginalFilename().substring(index + 1);
 				}
 
-				String[] extensiones = { "png", "jpg", "jpeg" };
+				String[] extensiones = {"PNG","JPG","JPEG", "png", "jpg", "jpeg" };
 				boolean contieneExtension = Arrays.stream(extensiones).anyMatch(extension::equals);
 
 				if (!contieneExtension) {
