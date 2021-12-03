@@ -95,7 +95,13 @@
        
                 </form>
               </li>
+              <li sec:authorize="isAuthenticated()" >
+              	<span class="nav-link" style="color:white" th:text="'Bienvenido '+${#httpServletRequest.remoteUser}"></span>
+              </li >
             </ul>
+            
+            
+              
           </div>
         </div>
       </nav>
